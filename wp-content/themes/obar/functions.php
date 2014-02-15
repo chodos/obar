@@ -272,6 +272,19 @@ function twentytwelve_widgets_init() {
 }
 add_action( 'widgets_init', 'twentytwelve_widgets_init' );
 
+function obar_widgets() {
+	register_sidebar( array(
+		'name' => __( 'Widget Cabeçalho', 'obar' ),
+		'id' => 'sidebar-4',
+		'description' => __( 'Widget para exibição de banner no cabeçalho', 'twentytwelve' ),
+		'before_widget' => '<div class="banner-topo">',
+		'after_widget' => '</div>',
+		'before_title' => '<h3>',
+		'after_title' => '</h3>',
+	) );
+}
+add_action( 'widgets_init', 'obar_widgets' );
+
 if ( ! function_exists( 'twentytwelve_content_nav' ) ) :
 /**
  * Displays navigation to next/previous pages when applicable.
@@ -508,3 +521,5 @@ function twentytwelve_customize_preview_js() {
 	wp_enqueue_script( 'twentytwelve-customizer', get_template_directory_uri() . '/js/theme-customizer.js', array( 'customize-preview' ), '20130301', true );
 }
 add_action( 'customize_preview_init', 'twentytwelve_customize_preview_js' );
+
+?>
