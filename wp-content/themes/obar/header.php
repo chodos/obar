@@ -40,19 +40,33 @@
 			<a href="<?php echo esc_url( home_url( '/' ) ); ?>"><img src="<?php header_image(); ?>" class="header-image" width="<?php echo get_custom_header()->width; ?>" height="<?php echo get_custom_header()->height; ?>" alt="" /></a>
 			<?php endif; ?>
 		</div>
+		<div class="area-banner-topo">
 		<?php if ( is_active_sidebar( 'sidebar-4' ) ) : ?>
 			<?php dynamic_sidebar( 'sidebar-4' ); ?>
 		<?php endif; ?>
+		</div>
 		<div class="box">
 			<h2 class="descricao-site"><?php bloginfo( 'description' ); ?></h2>
 		</div>	
-
-		<nav id="site-navigation" class="main-navigation" role="navigation">
-			<h3 class="menu-toggle"><?php _e( 'Menu', 'twentytwelve' ); ?></h3>
-			<a class="assistive-text" href="#content" title="<?php esc_attr_e( 'Skip to content', 'twentytwelve' ); ?>"><?php _e( 'Skip to content', 'twentytwelve' ); ?></a>
-			<?php wp_nav_menu( array( 'theme_location' => 'primary', 'menu_class' => 'nav-menu' ) ); ?>
-		</nav><!-- #site-navigation -->
+		<div style="position:relative;float:right;margin-top:26px">
+			<img src="<?php echo get_template_directory_uri(); ?>/imagens/icone-facebook.jpg" />
+			<img src="<?php echo get_template_directory_uri(); ?>/imagens/icone-twitter.jpg" />
+			<img src="<?php echo get_template_directory_uri(); ?>/imagens/icone-instagram.jpg" />
+			<img src="<?php echo get_template_directory_uri(); ?>/imagens/icone-google.jpg" />
+		</div>
 		
+		<div class="box menu-conjunto">
+			<div style="position:relative;float:left;">
+				<nav id="site-navigation" class="main-navigation" role="navigation">
+					<h3 class="menu-toggle"><?php _e( 'Menu', 'twentytwelve' ); ?></h3>
+					<a class="assistive-text" href="#content" title="<?php esc_attr_e( 'Skip to content', 'twentytwelve' ); ?>"><?php _e( 'Skip to content', 'twentytwelve' ); ?></a>
+					<?php wp_nav_menu( array( 'theme_location' => 'primary', 'menu_class' => 'nav-menu' ) ); ?>	
+				</nav><!-- #site-navigation -->
+			</div>
+			<?php if ( is_active_sidebar( 'sidebar-5' ) ) : ?>
+				<?php dynamic_sidebar( 'sidebar-5' ); ?>
+			<?php endif; ?>
+		</div>
 	</header><!-- #masthead -->
 
 	<div id="main" class="wrapper">

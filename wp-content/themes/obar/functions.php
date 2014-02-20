@@ -232,6 +232,49 @@ function twentytwelve_page_menu_args( $args ) {
 }
 add_filter( 'wp_page_menu_args', 'twentytwelve_page_menu_args' );
 
+class PublicidadeWidget extends WP_Widget {
+
+	function __construct() {
+		$widget_ops = array('classname' => 'widget_publicidade', 'description' => __('Exibe publicidade.'));
+		$control_ops = array('width' => 400, 'height' => 350);
+		parent::__construct('publicidade', __('Publicidade'), $widget_ops, $control_ops);
+	}
+
+	function widget( $args, $instance ) {
+		extract($args);
+		$text = apply_filters( 'widget_publicidade', empty( $instance['publicidade'] ) ? '' : $instance['publicidade'], $instance );
+		?>
+		<p class="titulo-publicidade">PUBLICIDADE</p>
+		<?php echo $before_widget; ?>			
+			<div class="textwidget"><?php echo !empty( $instance['filter'] ) ? wpautop( $text ) : $text; ?></div>
+		<?php
+		echo $after_widget;
+	}
+
+	function update( $new_instance, $old_instance ) {
+		$instance = $old_instance;
+		if ( current_user_can('unfiltered_html') )
+			$instance['publicidade'] =  $new_instance['publicidade'];
+		else
+			$instance['publicidade'] = stripslashes( wp_filter_post_kses( addslashes($new_instance['publicidade']) ) ); // wp_filter_post_kses() expects slashed
+		$instance['filter'] = isset($new_instance['filter']);
+		return $instance;
+	}
+
+	function form( $instance ) {
+		$instance = wp_parse_args( (array) $instance, array( 'publicidade' => '' ) );
+		$text = esc_textarea($instance['publicidade']);
+?>
+		<p><label>Código:</label></p>
+
+		<textarea class="widefat" rows="16" cols="20" id="<?php echo $this->get_field_id('publicidade'); ?>" name="<?php echo $this->get_field_name('publicidade'); ?>"><?php echo $text; ?></textarea>
+<?php
+	}
+}
+
+add_action('widgets_init', create_function('', 'return register_widget("PublicidadeWidget");'));
+
+
 /**
  * Register sidebars.
  *
@@ -274,7 +317,7 @@ add_action( 'widgets_init', 'twentytwelve_widgets_init' );
 
 function obar_widgets() {
 	register_sidebar( array(
-		'name' => __( 'Widget Cabeçalho', 'obar' ),
+		'name' => __( 'Publicidade Header', 'obar' ),
 		'id' => 'sidebar-4',
 		'description' => __( 'Widget para exibição de banner no cabeçalho', 'twentytwelve' ),
 		'before_widget' => '<div class="banner-topo">',
@@ -282,8 +325,29 @@ function obar_widgets() {
 		'before_title' => '<h3>',
 		'after_title' => '</h3>',
 	) );
+	
+	register_sidebar( array(
+		'name' => __( 'Widget Menu', 'obar' ),
+		'id' => 'sidebar-5',
+		'description' => __( 'Widget para exibição da busca no menu', 'twentytwelve' ),
+		'before_widget' => '<div class="widget-menu">',
+		'after_widget' => '</div>',
+		'before_title' => '<h3>',
+		'after_title' => '</h3>',
+	) );
+	
+	register_sidebar( array(
+		'name' => __( 'Publicidade Sidebar', 'obar' ),
+		'id' => 'sidebar-6',
+		'description' => __( 'Widget para exibição de banner no cabeçalho', 'twentytwelve' ),
+		'before_widget' => '<div class="box">',
+		'after_widget' => '</div>',
+		'before_title' => '<h3>',
+		'after_title' => '</h3>',
+	) );
 }
 add_action( 'widgets_init', 'obar_widgets' );
+
 
 if ( ! function_exists( 'twentytwelve_content_nav' ) ) :
 /**
