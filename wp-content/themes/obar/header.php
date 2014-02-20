@@ -45,7 +45,7 @@
 			<?php dynamic_sidebar( 'sidebar-4' ); ?>
 		<?php endif; ?>
 		</div>
-		<div class="box">
+		<div style="position:relative;float:left;width:600px">
 			<h2 class="descricao-site"><?php bloginfo( 'description' ); ?></h2>
 		</div>	
 		<div style="position:relative;float:right;margin-top:26px">

@@ -232,6 +232,48 @@ function twentytwelve_page_menu_args( $args ) {
 }
 add_filter( 'wp_page_menu_args', 'twentytwelve_page_menu_args' );
 
+class AssuntosWidget extends WP_Widget {
+
+	function __construct() {
+		$widget_ops = array('classname' => 'widget_assunto', 'description' => __('Exibe menu dropdown de assuntos.'));
+		$control_ops = array('width' => 400, 'height' => 350);
+		parent::__construct('assuntos', __('Assuntos'), $widget_ops, $control_ops);
+	}
+
+	function widget( $args, $instance ) {
+		extract($args);
+		$title = apply_filters( 'widget_title', empty( $instance['title'] ) ? '' : $instance['title'], $instance, $this->id_base );
+		echo $before_widget;
+		if ( !empty( $title ) ) { echo $before_title . $title . $after_title; } 
+		$assunto = get_tags();
+		if($assunto) {
+			?><select onchange="location = this.options[this.selectedIndex].value;">
+				<option value=""> </option><?php
+			foreach($assunto as $tag) {
+				echo '<option value="?tag=' . $tag->slug . '">' . $tag->name . '</option>';
+			}
+			?></select><?php
+		}
+		echo $after_widget;
+	}
+
+	function update( $new_instance, $old_instance ) {
+		$instance['title'] = strip_tags(stripslashes($new_instance['title']));
+		return $instance;
+	}
+
+	function form( $instance ) {
+		$instance = wp_parse_args( (array) $instance, array( 'title' => '') );
+		$title = esc_attr( $instance['title'] );
+?>
+		<p><label for="<?php echo $this->get_field_id('title'); ?>"><?php _e( 'Title:' ); ?></label>
+		<input class="widefat" id="<?php echo $this->get_field_id('title'); ?>" name="<?php echo $this->get_field_name('title'); ?>" type="text" value="<?php echo $title; ?>" /></p>
+<?php
+	}
+}
+
+add_action('widgets_init', create_function('', 'return register_widget("AssuntosWidget");'));
+
 class PublicidadeWidget extends WP_Widget {
 
 	function __construct() {
@@ -274,6 +316,71 @@ class PublicidadeWidget extends WP_Widget {
 
 add_action('widgets_init', create_function('', 'return register_widget("PublicidadeWidget");'));
 
+class NewsletterWidget extends WP_Widget {
+
+	function __construct() {
+		$widget_ops = array('classname' => 'widget_newsletter', 'description' => __('Exibe inscrição na newsletter.'));
+		$control_ops = array('width' => 400, 'height' => 350);
+		parent::__construct('wd_newsletter', __('Newsletter'), $widget_ops, $control_ops);
+	}
+
+	function widget( $args, $instance ) {
+		extract($args);
+		$title = '<span style="color:#13664a">newsletter</span>';
+		echo $before_widget;
+		if ( !empty( $title ) ) { echo $before_title . $title . $after_title; } 
+		//código embed plugin wysija
+		?>				
+			<!--START Scripts : this is the script part you can add to the header of your theme-->
+			<script type="text/javascript" src="http://localhost/git/obar/wp-includes/js/jquery/jquery.js?ver=2.5.9.4"></script>
+			<script type="text/javascript" src="http://localhost/git/obar/wp-content/plugins/wysija-newsletters/js/validate/languages/jquery.validationEngine-pt.js?ver=2.5.9.4"></script>
+			<script type="text/javascript" src="http://localhost/git/obar/wp-content/plugins/wysija-newsletters/js/validate/jquery.validationEngine.js?ver=2.5.9.4"></script>
+			<script type="text/javascript" src="http://localhost/git/obar/wp-content/plugins/wysija-newsletters/js/front-subscribers.js?ver=2.5.9.4"></script>
+			<script type="text/javascript">
+							/* <![CDATA[ */
+							var wysijaAJAX = {"action":"wysija_ajax","controller":"subscribers","ajaxurl":"http://localhost/git/obar/wp-admin/admin-ajax.php","loadingTrans":"Carregando..."};
+							/* ]]> */
+							</script><script type="text/javascript" src="http://localhost/git/obar/wp-content/plugins/wysija-newsletters/js/front-subscribers.js?ver=2.5.9.4"></script>
+			<!--END Scripts-->
+			
+			<img style="margin-right:10px;display:inline-block;vertical-align:middle" src="<?php echo get_template_directory_uri(); ?>/imagens/newsletter.png" />
+			<div style="position:relative;width:75%;display:inline-block;vertical-align:middle">
+				<div class="widget_wysija_cont html_wysija"><div id="msg-form-wysija-html5305d80a7f2ed-1" class="wysija-msg ajax"></div><form id="form-wysija-html5305d80a7f2ed-1" method="post" action="#wysija" class="widget_wysija html_wysija"><div class="wysija-msg"></div><div class="wysija-msg ajax"></div><input type="hidden" value="e2740ce372" id="wysijax" />
+				<p class="wysija-paragraph">
+					
+					<input type="text" name="wysija[user][email]" class="wysija-input validate[required,custom[email]]" title="Email" placeholder="Email" value="" />
+					
+					<span class="abs-req">
+						<input type="text" name="wysija[user][abs][email]" class="wysija-input validated[abs][email]" value="" />
+					</span>
+					
+				</p>
+				<input class="wysija-submit wysija-submit-field" style="margin-top:-20px" type="submit" value="Inscrever" />
+				
+					<input type="hidden" name="form_id" value="1" />
+					<input type="hidden" name="action" value="save" />
+					<input type="hidden" name="controller" value="subscribers" />
+					<input type="hidden" value="1" name="wysija-page" />
+				
+					
+						<input type="hidden" name="wysija[user_list][list_ids]" value="1" />
+					
+				</form></div>
+			</div>
+		<?php
+		echo $after_widget;
+	}
+
+	function update( $new_instance, $old_instance ) {
+		
+	}
+
+	function form( $instance ) {
+		
+	}
+}
+
+add_action('widgets_init', create_function('', 'return register_widget("NewsletterWidget");'));
 
 /**
  * Register sidebars.

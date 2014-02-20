@@ -2,6 +2,13 @@
 Styles for older IE versions (previous to IE9).
 */
 
+@font-face {
+font-family: 'Myriad';
+src: local('MyriadPro.otf'), url('css/fonte/MyriadPro.eot');
+font-weight: normal;
+font-style: normal;
+}
+
 body {
 	background-color: #e6e6e6;
 }
@@ -240,4 +247,11 @@ body.full-width .site-content {
 .ie7 .rtl .main-navigation li ul ul ul {
 	position: relative;
 	z-index: 1;
+}
+
+h2.descricao-site{
+	font-family:Myriad;
+	font-size:20px;
+	margin: 12px 90px;
+	margin: 12px 90px;
 }

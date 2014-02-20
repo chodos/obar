@@ -52,9 +52,19 @@ http://blog.typekit.com/2011/11/09/type-study-sizing-the-legible-letter/
 
 @font-face {
 font-family: 'Myriad';
-src: local('MyriadPro.otf'), url('css/fonte/MyriadPro.otf');
+src: url('css/fonte/MyriadPro.eot?#iefix') format('embedded-opentype'); /* IE6-IE8 */
+src: url('css/fonte/MyriadPro.otf') format('opentype');
 font-weight: normal;
 font-style: normal;
+}
+
+
+@font-face {
+font-family: 'Avenir';
+src: url('fonts/avenirnextltpro-mediumcn.eot?#iefix') format('embedded-opentype'); /* IE6-IE8 */
+src: url('fonts/avenirnextltpro-mediumcn.woff') format('woff'), /* Modern Browsers */
+     url('fonts/avenirnextltpro-mediumcn.ttf')  format('truetype'), /* Safari, Android, iOS */
+     url('fonts/avenirnextltpro-mediumcn.svg#svgFontName') format('svg') /* Legacy iOS */
 }
 
 html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
@@ -365,7 +375,6 @@ video {
 }
 .entry-content img,
 .comment-content img,
-.widget img,
 .author-avatar img,
 img.wp-post-image {
 	/* Add fancy borders to all WordPress-added images but not things like badges and icons and the like */
@@ -624,9 +633,10 @@ section[role="banner"] {
 }
 .widget-area .widget h3 {
 	margin-bottom: 12px;
-	margin-bottom: 0.857142857rem;;
-	font-size:1.7em;
-	font-weight:bold;
+	margin-bottom: 0.857142857rem;
+	font-size: 28px;
+	font-size: 2.014285714rem;
+	font-weight:lighter;
 }
 .widget-area .widget p,
 .widget-area .widget li,
@@ -1769,8 +1779,8 @@ img#wpstats {
 h2.descricao-site{
 	font-family:Myriad;
 	font-size:30px;
-	margin: 12px 90px;
-	margin: 12px 90px;
+	margin: 12px;
+	text-align:center;
 }
 
 div.box {
@@ -1815,7 +1825,6 @@ div.box {
 .widget-menu {
 	position:relative;
 	float:right;
-	height:100%;
 	background-color:#000;
 	color:#FFF;
 }
@@ -1825,27 +1834,50 @@ div.box {
 	font-size:0.7em;
 }
 
-.search-field {
-	position:relative;
-	float:left;
-	margin:3px;
-	height:2.092307692em;
-	padding-right:27px;
-	margin-right:10px;
+.search-area {
+	float:right;
+	width:180px;
+	height:28px;
+	border:1px solid #CCC;
+	border-radius:4px;
+	background-color:#FFF;
+	margin-top:2px;
+	margin-right:6px;
 }
 
-.botao-busca {
-	position:relative;
+.search-field {
 	float:left;
-	margin:3px;
-	height:2.092307692em;
-	margin-left:-40px;
+	width:140px;
+	border:none;
+	font-size:14px;
+	line-height:14px;
+	background-color:transparent;
+	margin:6px 0px 0px 6px; 
+	padding: 0px;
+	display:inline;
+	-webkit-appearance: none;
 }
+
+.botao-busca:focus,
+.search-field:focus {
+	outline: 0;
+}
+
+.search-field::-ms-clear {
+    display: none;
+}
+
+
+.botao-busca {
+	margin:1px;
+	float:right;
+}
+
 
 .widget-area .widget li a {
 	font-family:Myriad;
-	font-size: 16px;
-	font-size: 1.142857143rem;
+	font-size: 18px;
+	font-size: 1.285714286rem;
 	font-weight:bold;
 	color:#13664a;
 	text-transform:uppercase;
