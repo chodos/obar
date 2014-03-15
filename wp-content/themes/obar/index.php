@@ -18,14 +18,70 @@ get_header(); ?>
 
 	<div id="primary" class="site-content">
 		<div id="content" role="main">
-		<?php if ( have_posts() ) : ?>
-
-			<?php /* Start the Loop */ ?>
-			<?php while ( have_posts() ) : the_post(); ?>
-				<?php get_template_part( 'content', get_post_format() ); ?>
-			<?php endwhile; ?>
-
-			<?php twentytwelve_content_nav( 'nav-below' ); ?>
+		<?php if ( have_posts() ) : 
+					if (is_home()) {
+						echo do_shortcode("[SlideDeck2 id=39]"); 
+					}
+					$args = array(
+						'post_type' => 'post',
+						'cat' => 7,
+						'posts_per_page' => 1
+					);
+					$noticias = new WP_Query($args);
+					
+					if($noticias->have_posts()){
+						$args = array(
+							'post_type' => 'post',
+							'cat' => -7,
+							'posts_per_page' => 6
+						);
+						$geral = new WP_Query($args);
+						
+						echo '<div class="post-row">';
+						$geral->the_post();		
+						get_template_part( 'conteudo', get_post_format() );					
+						$noticias->the_post();
+						get_template_part( 'noticias', get_post_format() );	
+						echo '</div>';
+						
+						echo '<div class="post-row">';
+						$i = 2;
+						
+						while ($i < 6) : 
+						$geral->the_post(); 						
+						get_template_part( 'conteudo', get_post_format() );
+						
+						if($i % 2 != 0) { 
+							echo '</div><div class="post-row">'; 
+						} 
+						
+						$i++; 
+						endwhile; 
+						$geral->the_post(); 						
+						get_template_part( 'conteudo-full', get_post_format() );
+						echo '</div>';
+					}
+					else {
+						$i = 1; 
+						echo '<div class="post-row">';
+						
+						while ( $i < 5 ) : 
+						the_post();
+						get_template_part( 'conteudo', get_post_format() );
+						
+						if($i % 2 == 0) { 
+							echo '</div><div class="post-row">'; 
+						} 
+						$i++;
+						
+						endwhile; 
+						the_post();
+						get_template_part( 'conteudo-full', get_post_format() );
+						echo '</div>';
+					}
+?>
+			<?php wp_related_posts()?>
+			<?php //twentytwelve_content_nav( 'nav-below' ); ?>
 
 		<?php else : ?>
 

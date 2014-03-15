@@ -18,7 +18,7 @@ get_header(); ?>
 
 		<?php if ( have_posts() ) : ?>
 			<header class="archive-header">
-				<h1 class="archive-title"><?php printf( __( 'Tag Archives: %s', 'twentytwelve' ), '<span>' . single_tag_title( '', false ) . '</span>' ); ?></h1>
+				<h1 class="archive-title"><?php printf( __( 'Arquivo do Assunto: %s', 'twentytwelve' ), '<span>' . single_tag_title( '', false ) . '</span>' ); ?></h1>
 
 			<?php if ( tag_description() ) : // Show an optional tag description ?>
 				<div class="archive-meta"><?php echo tag_description(); ?></div>
@@ -34,7 +34,9 @@ get_header(); ?>
 				 * this in a child theme then include a file called called content-___.php
 				 * (where ___ is the post format) and that will be used instead.
 				 */
-				get_template_part( 'content', get_post_format() );
+				echo '<div class="post-row" style="margin-bottom:16px">';
+				get_template_part( 'content-category', get_post_format() );
+				echo '</div>';
 
 			endwhile;
 

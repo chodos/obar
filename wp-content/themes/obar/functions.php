@@ -331,41 +331,31 @@ class NewsletterWidget extends WP_Widget {
 		if ( !empty( $title ) ) { echo $before_title . $title . $after_title; } 
 		//código embed plugin wysija
 		?>				
-			<!--START Scripts : this is the script part you can add to the header of your theme-->
-			<script type="text/javascript" src="http://localhost/git/obar/wp-includes/js/jquery/jquery.js?ver=2.5.9.4"></script>
-			<script type="text/javascript" src="http://localhost/git/obar/wp-content/plugins/wysija-newsletters/js/validate/languages/jquery.validationEngine-pt.js?ver=2.5.9.4"></script>
-			<script type="text/javascript" src="http://localhost/git/obar/wp-content/plugins/wysija-newsletters/js/validate/jquery.validationEngine.js?ver=2.5.9.4"></script>
-			<script type="text/javascript" src="http://localhost/git/obar/wp-content/plugins/wysija-newsletters/js/front-subscribers.js?ver=2.5.9.4"></script>
-			<script type="text/javascript">
-							/* <![CDATA[ */
-							var wysijaAJAX = {"action":"wysija_ajax","controller":"subscribers","ajaxurl":"http://localhost/git/obar/wp-admin/admin-ajax.php","loadingTrans":"Carregando..."};
-							/* ]]> */
-							</script><script type="text/javascript" src="http://localhost/git/obar/wp-content/plugins/wysija-newsletters/js/front-subscribers.js?ver=2.5.9.4"></script>
-			<!--END Scripts-->
 			
-			<img style="margin-right:10px;display:inline-block;vertical-align:middle" src="<?php echo get_template_directory_uri(); ?>/imagens/newsletter.png" />
-			<div style="position:relative;width:75%;display:inline-block;vertical-align:middle">
-				<div class="widget_wysija_cont html_wysija"><div id="msg-form-wysija-html5305d80a7f2ed-1" class="wysija-msg ajax"></div><form id="form-wysija-html5305d80a7f2ed-1" method="post" action="#wysija" class="widget_wysija html_wysija"><div class="wysija-msg"></div><div class="wysija-msg ajax"></div><input type="hidden" value="e2740ce372" id="wysijax" />
-				<p class="wysija-paragraph">
-					
-					<input type="text" name="wysija[user][email]" class="wysija-input validate[required,custom[email]]" title="Email" placeholder="Email" value="" />
-					
-					<span class="abs-req">
-						<input type="text" name="wysija[user][abs][email]" class="wysija-input validated[abs][email]" value="" />
-					</span>
-					
-				</p>
-				<input class="wysija-submit wysija-submit-field" style="margin-top:-20px" type="submit" value="Inscrever" />
-				
-					<input type="hidden" name="form_id" value="1" />
-					<input type="hidden" name="action" value="save" />
-					<input type="hidden" name="controller" value="subscribers" />
-					<input type="hidden" value="1" name="wysija-page" />
-				
-					
+			<div style="position:relative;width:100%;display:inline-block;">
+				<div class="widget_wysija_cont html_wysija"><div id="msg-form-wysija-html5305d80a7f2ed-1" class="wysija-msg ajax"></div>
+				<form id="form-wysija-html5305d80a7f2ed-1" method="post" action="#wysija" class="widget_wysija html_wysija"><div class="wysija-msg"></div><div class="wysija-msg ajax"></div><input type="hidden" value="e2740ce372" id="wysijax" />
+					<div class="box">
+						<p class="wysija-paragraph" style="margin:0px">
+							
+							<input type="text" name="wysija[user][email]" class="wysija-input validate[required,custom[email]]" title="Email" placeholder="Email" value="" size="16" />
+							
+							<span class="abs-req">
+								<input type="text" name="wysija[user][abs][email]" class="wysija-input validated[abs][email]" value="" />
+							</span>
+							
+						</p>
+					</div>
+					<div class="box" style="margin-left:7px">
+						<input class="wysija-submit wysija-submit-field" style="margin:0px" type="submit" value="Inscrever" />
+						<input type="hidden" name="form_id" value="1" />
+						<input type="hidden" name="action" value="save" />
+						<input type="hidden" name="controller" value="subscribers" />
+						<input type="hidden" value="1" name="wysija-page" />
 						<input type="hidden" name="wysija[user_list][list_ids]" value="1" />
-					
-				</form></div>
+					</div>	
+				</form>
+				</div>
 			</div>
 		<?php
 		echo $after_widget;
@@ -447,7 +437,7 @@ function obar_widgets() {
 		'name' => __( 'Publicidade Sidebar', 'obar' ),
 		'id' => 'sidebar-6',
 		'description' => __( 'Widget para exibição de banner no cabeçalho', 'twentytwelve' ),
-		'before_widget' => '<div class="box">',
+		'before_widget' => '<div class="box publicidade-lateral">',
 		'after_widget' => '</div>',
 		'before_title' => '<h3>',
 		'after_title' => '</h3>',
@@ -692,5 +682,10 @@ function twentytwelve_customize_preview_js() {
 	wp_enqueue_script( 'twentytwelve-customizer', get_template_directory_uri() . '/js/theme-customizer.js', array( 'customize-preview' ), '20130301', true );
 }
 add_action( 'customize_preview_init', 'twentytwelve_customize_preview_js' );
+
+function custom_excerpt_length( $length ) {
+	return 16;
+}
+add_filter( 'excerpt_length', 'custom_excerpt_length', 999 );
 
 ?>

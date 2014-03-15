@@ -21,9 +21,15 @@ get_header(); ?>
 			<?php twentytwelve_content_nav( 'nav-above' ); ?>
 
 			<?php /* Start the Loop */ ?>
-			<?php while ( have_posts() ) : the_post(); ?>
-				<?php get_template_part( 'content', get_post_format() ); ?>
-			<?php endwhile; ?>
+			<?php
+				while ( have_posts() ) : the_post();
+				
+					echo '<div class="post-row" style="margin-bottom:16px">';
+					get_template_part( 'content-category', get_post_format() );
+					echo '</div>';
+				
+				endwhile; 
+			?>
 
 			<?php twentytwelve_content_nav( 'nav-below' ); ?>
 
